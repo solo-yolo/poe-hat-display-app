@@ -98,4 +98,4 @@ class POE_HAT_B:
 
         for view in itertools.cycle(views):
             view()
-            time.sleep(0.5)
+            time.sleep(1)
