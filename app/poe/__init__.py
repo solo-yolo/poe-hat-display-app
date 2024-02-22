@@ -92,43 +92,8 @@ class POE_HAT_B:
         draw.text((0, 1), socket.gethostname(), font=font, fill=0)
         show.ShowImage(show.getbuffer(img))
 
-    def show_spinner(self):
-        # Define screen dimensions
-        width = 128
-        height = 32
-
-        # Create a black image
-        image = Image.new("1", (width, height), 0)
-        draw = ImageDraw.Draw(image)
-
-        # Define animation frames
-        frames = [
-            [0, 16, 0, 32],  # Top-left quadrant
-            [32, 16, width, 32],  # Top-right quadrant
-            [width, 0, width, 16],  # Bottom-right quadrant
-            [0, 0, 32, 16],  # Bottom-left quadrant
-        ]
-
-        # Animation speed (adjust as needed)
-        delay = 0.1
-
-        while True:
-            for frame in frames:
-                # Clear the image
-                draw.rectangle((0, 0, width, height), fill=0)
-
-                # Draw the spinner arc
-                draw.arc(frame, 0, 360, fill=255, width=2)
-
-                # Display the image
-                show.ShowImage(show.getbuffer(image))
-
-                # Wait for a bit
-                time.sleep(delay)
-
-
     def display(self):
-        views = [self.show_spinner, self.show_hostname, self.show_smile, self.POE_HAT_Display, self.show_datetime, self.show_shrug]
+        views = [self.show_hostname, self.show_smile, self.POE_HAT_Display, self.show_datetime, self.show_shrug]
 
         for view in itertools.cycle(views):
             view()
