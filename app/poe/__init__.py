@@ -117,7 +117,7 @@ class POE_HAT_B:
         self.display_two_lines(
             f"mem: {mem.percent}%, swp: {swp.percent}%",
             f"used/total: {mem.used / (2**30):.2f}/{mem.total / (2**30):.2f}GB",
-            font=font_medium
+            font=font_small
         )
 
     def storage_view(self):
@@ -125,7 +125,7 @@ class POE_HAT_B:
         self.display_two_lines(
             f"storage: {disk.percent}%",
             f"used/total: {disk.used / (2**30):.2f}/{disk.total / (2**30):.2f}GB",
-            font=font_medium
+            font=font_small
         )
 
     def display_one_line(self, text, font=font_large):
@@ -143,11 +143,11 @@ class POE_HAT_B:
 
     def display(self):
         for view in itertools.cycle([
-            self.time_single_line_view,
-            self.address_and_host_view,
-            self.date_time_view,
-            self.temp_and_fan_view,
-            self.load_average_view,
+            # self.time_single_line_view,
+            # self.address_and_host_view,
+            # self.date_time_view,
+            # self.temp_and_fan_view,
+            # self.load_average_view,
             self.memory_view,
             self.storage_view,
             self.uptime_view,
