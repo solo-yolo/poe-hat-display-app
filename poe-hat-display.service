@@ -1,0 +1,11 @@
+[Unit]
+Description=Service to display various system information on PoE HaT B display
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /var/lib/poe-hat-display-app/app/main.py
+
+[Install]
+WantedBy=multi-user.target
