@@ -2,6 +2,7 @@ import itertools
 import os
 import socket
 import time
+import datetime
 
 import smbus
 from PIL import Image, ImageDraw, ImageFont
@@ -84,15 +85,9 @@ class POE_HAT_B:
 
     def uptime_view(self):
         uptime_seconds = self.retrieve_uptime()
-        uptime_days = int(uptime_seconds // (24 * 3600))
-        uptime_hours = int((uptime_seconds % (24 * 3600)) // 3600)
-        uptime_minutes = int((uptime_seconds % 3600) // 60)
-        uptime_seconds = int(uptime_seconds % 60)
-
         self.display_two_lines(
-            f"uptime: {uptime_days}d {uptime_hours}h {uptime_minutes}m",
-            f"{uptime_seconds}s",
-            font=font_medium
+            f"uptime: ",
+            str(datetime.timedelta(seconds=int(uptime_seconds)))
         )
 
     def temp_and_fan_view(self):
