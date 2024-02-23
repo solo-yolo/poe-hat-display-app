@@ -93,7 +93,7 @@ class POE_HAT_B:
         )
     def date_single_line_view(self):
         self.display_one_line(
-            time.strftime('%H:%M:%S', time.localtime())
+            time.strftime('%m.%d', time.localtime())
         )
 
     def temp_and_fan_view(self):
