@@ -73,8 +73,8 @@ class POE_HAT_B:
     def load_average_view(self):
         load1, load5, load15 = os.getloadavg()
         self.display_two_lines(
-            f"load average",
-            f"{load1:.2f} | {load5:.2f} | {load15:.2f}"
+            f"load average:",
+            f"{load1:.2f} {load5:.2f} {load15:.2f}"
         )
 
     def temp_and_fan_view(self):
