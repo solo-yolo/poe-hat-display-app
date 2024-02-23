@@ -1,7 +1,8 @@
+import itertools
 import os
 import socket
 import time
-import itertools
+
 import smbus
 from PIL import Image, ImageDraw, ImageFont
 
@@ -20,15 +21,18 @@ image1 = Image.new('1', (show.width, show.height), "WHITE")
 draw = ImageDraw.Draw(image1)
 
 DEFAULT_TEMP_THRESHOLD_FOR_FAN = 30
+DEFAULT_DISPLAY_DELAY_SECONDS = 3
+
 
 class POE_HAT_B:
-    def __init__(self, address=0x20, temp_threshold_for_fan=DEFAULT_TEMP_THRESHOLD_FOR_FAN):
+    def __init__(self, address=0x20, temp_threshold_for_fan=DEFAULT_TEMP_THRESHOLD_FOR_FAN,
+                 display_delay=DEFAULT_DISPLAY_DELAY_SECONDS):
         self.i2c = smbus.SMBus(1)
         self.address = address  # 0x20
+
+        self.display_delay = display_delay
+        self.fan_enabled = True
         self.enable_fan()
-        self.FAN_MODE = 0
-        self.fan_enabled = False
-        self.TEMP_THRESHOLD_FOR_FAN = 40
         self.temp_threshold_for_fan = temp_threshold_for_fan
         self.hostname = socket.gethostname()
         self.ip = self.retrieve_ip_address()
@@ -53,34 +57,6 @@ class POE_HAT_B:
             temp = (int)(f.read()) / 1000.0
         return temp
 
-    def POE_HAT_Display(self):
-        # show.Init()
-        # show.ClearBlack()
-
-        image1 = Image.new('1', (show.width, show.height), "WHITE")
-        draw = ImageDraw.Draw(image1)
-        ip = self.retrieve_ip_address()
-        temp = self.retrieve_temperature()
-        draw.text((0, 1), 'IP:' + str(ip), font=font_small, fill=0)
-        draw.text((0, 15), 'Temp:' + str(((int)(temp * 10)) / 10.0), font=font_small, fill=0)
-
-        if temp >= self.temp_threshold_for_fan:
-            self.FAN_MODE = 1
-            self.enable_fan()
-            self.fan_enabled = True
-        elif temp < self.temp_threshold_for_fan - 2:
-            self.FAN_MODE = 0
-            self.disable_fan()
-            self.fan_enabled = False
-
-        if (self.FAN_MODE == 1):
-            draw.text((77, 16), 'FAN:ON', font=font_small, fill=0)
-            self.enable_fan()
-        else:
-            draw.text((77, 16), 'FAN:OFF', font=font_small, fill=0)
-            self.disable_fan()
-        show.ShowImage(show.getbuffer(image1))
-
     def date_time_view(self):
         self.display_two_lines(
             time.strftime('%Y-%m-%d', time.localtime()),
@@ -91,6 +67,7 @@ class POE_HAT_B:
         self.display_one_line(
             time.strftime('%H:%M:%S', time.localtime())
         )
+
     def date_single_line_view(self):
         self.display_one_line(
             time.strftime('%m.%d', time.localtime())
@@ -129,14 +106,13 @@ class POE_HAT_B:
         show.ShowImage(show.getbuffer(img))
 
     def display(self):
-        views = [
+
+        for view in itertools.cycle([
             self.address_and_host_view,
             self.temp_and_fan_view,
             self.date_time_view,
             self.date_single_line_view,
             self.time_single_line_view,
-        ]
-
-        for view in itertools.cycle(views):
+        ]):
             view()
-            time.sleep(1)
+            time.sleep(self.display_delay)
