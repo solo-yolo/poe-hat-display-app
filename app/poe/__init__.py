@@ -87,7 +87,8 @@ class POE_HAT_B:
         uptime_seconds = self.retrieve_uptime()
         self.display_two_lines(
             f"uptime: ",
-            str(datetime.timedelta(seconds=int(uptime_seconds)))
+            str(datetime.timedelta(seconds=int(uptime_seconds))),
+            font=font_medium
         )
 
     def temp_and_fan_view(self):
@@ -124,12 +125,12 @@ class POE_HAT_B:
 
     def display(self):
         for view in itertools.cycle([
+            self.time_single_line_view,
+            self.address_and_host_view,
+            self.date_time_view,
+            self.temp_and_fan_view,
+            self.load_average_view,
             self.uptime_view,
-            # self.time_single_line_view,
-            # self.address_and_host_view,
-            # self.date_time_view,
-            # self.temp_and_fan_view,
-            # self.load_average_view,
         ]):
             view()
             time.sleep(self.display_delay)
