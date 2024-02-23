@@ -73,7 +73,7 @@ class POE_HAT_B:
     def load_average_view(self):
         load1, load5, load15 = os.getloadavg()
         self.display_two_lines(
-            f"load avg: 1m | 5m | 15m",
+            f"load average",
             f"{load1:.2f} | {load5:.2f} | {load15:.2f}"
         )
 
@@ -106,7 +106,7 @@ class POE_HAT_B:
         img = Image.new('1', (show.width, show.height), "WHITE")
         draw = ImageDraw.Draw(img)
         draw.text((0, 1), line1, font=font, fill=0)
-        draw.text((0, 18), line2, font=font, fill=0)
+        draw.text((0, 16), line2, font=font, fill=0)
         show.ShowImage(show.getbuffer(img))
 
     def display(self):
