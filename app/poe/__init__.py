@@ -115,7 +115,7 @@ class POE_HAT_B:
         mem = psutil.virtual_memory()
         self.display_two_lines(
             f"memory: {mem.percent}%",
-            f"{mem.used / (2**30):.2f} of {mem.total / (2**30):.2f}GB",
+            f"{mem.used / (2**30):.1f} of {mem.total / (2**30):.1f}GB",
             font=font_medium
         )
 
@@ -123,7 +123,7 @@ class POE_HAT_B:
         disk = psutil.disk_usage('/')
         self.display_two_lines(
             f"storage: {disk.percent}%",
-            f"{disk.used / (2**30):.2f} of {disk.total / (2**30):.2f}GB",
+            f"{disk.used / (2**30):.1f} of {disk.total / (2**30):.1f}GB",
             font=font_medium
         )
 
