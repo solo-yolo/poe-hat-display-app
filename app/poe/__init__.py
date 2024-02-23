@@ -106,7 +106,7 @@ class POE_HAT_B:
         img = Image.new('1', (show.width, show.height), "WHITE")
         draw = ImageDraw.Draw(img)
         draw.text((0, 1), line1, font=font, fill=0)
-        draw.text((0, 16), line2, font=font, fill=0)
+        draw.text((0, 17), line2, font=font, fill=0)
         show.ShowImage(show.getbuffer(img))
 
     def display(self):
