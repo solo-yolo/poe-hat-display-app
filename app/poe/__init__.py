@@ -53,6 +53,11 @@ class POE_HAT_B:
         s.close()
         return ip
 
+    def retrieve_uptime(self):
+        with open('/proc/uptime', 'r') as f:
+            uptime_seconds = float(f.readline().split()[0])
+        return uptime_seconds
+
     def retrieve_temperature(self):
         with open('/sys/class/thermal/thermal_zone0/temp', 'rt') as f:
             temp = (int)(f.read()) / 1000.0
@@ -75,6 +80,19 @@ class POE_HAT_B:
         self.display_two_lines(
             f"load average:",
             f"{load1:.2f} {load5:.2f} {load15:.2f}"
+        )
+
+    def uptime_view(self):
+        uptime_seconds = self.retrieve_uptime()
+        uptime_days = int(uptime_seconds // (24 * 3600))
+        uptime_hours = int((uptime_seconds % (24 * 3600)) // 3600)
+        uptime_minutes = int((uptime_seconds % 3600) // 60)
+        uptime_seconds = int(uptime_seconds % 60)
+
+        self.display_two_lines(
+            f"uptime: {uptime_days}d {uptime_hours}h {uptime_minutes}m",
+            f"{uptime_seconds}s",
+            font=font_medium
         )
 
     def temp_and_fan_view(self):
@@ -111,11 +129,12 @@ class POE_HAT_B:
 
     def display(self):
         for view in itertools.cycle([
-            self.time_single_line_view,
-            self.address_and_host_view,
-            self.date_time_view,
-            self.temp_and_fan_view,
-            self.load_average_view,
+            self.uptime_view,
+            # self.time_single_line_view,
+            # self.address_and_host_view,
+            # self.date_time_view,
+            # self.temp_and_fan_view,
+            # self.load_average_view,
         ]):
             view()
             time.sleep(self.display_delay)
