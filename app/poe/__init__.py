@@ -14,7 +14,7 @@ dir_path = os.path.dirname(os.path.abspath(__file__))
 
 font_path = dir_path + '/font.ttf'
 
-font_small = ImageFont.truetype(font_path, 12)
+font_small = ImageFont.truetype(font_path, 13)
 font_medium = ImageFont.truetype(font_path, 15)
 font_large = ImageFont.truetype(font_path, 26)
 
