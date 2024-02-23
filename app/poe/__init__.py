@@ -14,7 +14,8 @@ dir_path = os.path.dirname(os.path.abspath(__file__))
 
 font_path = dir_path + '/font.ttf'
 
-font_small = ImageFont.truetype(font_path, 13)
+font_small = ImageFont.truetype(font_path, 12)
+font_medium = ImageFont.truetype(font_path, 15)
 font_large = ImageFont.truetype(font_path, 26)
 
 image1 = Image.new('1', (show.width, show.height), "WHITE")
@@ -60,7 +61,8 @@ class POE_HAT_B:
     def date_time_view(self):
         self.display_two_lines(
             time.strftime('%Y-%m-%d', time.localtime()),
-            time.strftime('%H:%M:%S', time.localtime())
+            time.strftime('%H:%M:%S', time.localtime()),
+            font=font_medium
         )
 
     def time_single_line_view(self):
@@ -86,7 +88,7 @@ class POE_HAT_B:
         temp_formatted_line = f"cpu: {temp:.1f}°C"
         fan_status_line = "fan: enabled" if self.fan_enabled else "fan: disabled"
 
-        self.display_two_lines(temp_formatted_line, fan_status_line)
+        self.display_two_lines(temp_formatted_line, fan_status_line, font=font_medium)
 
     def address_and_host_view(self):
         self.display_two_lines(
@@ -94,17 +96,17 @@ class POE_HAT_B:
             self.ip,
         )
 
-    def display_one_line(self, text):
+    def display_one_line(self, text, font=font_large):
         img = Image.new('1', (show.width, show.height), "WHITE")
         draw = ImageDraw.Draw(img)
-        draw.text((0, 1), text, font=font_large, fill=0)
+        draw.text((0, 1), text, font=font, fill=0)
         show.ShowImage(show.getbuffer(img))
 
-    def display_two_lines(self, line1, line2):
+    def display_two_lines(self, line1, line2, font=font_small):
         img = Image.new('1', (show.width, show.height), "WHITE")
         draw = ImageDraw.Draw(img)
-        draw.text((0, 1), line1, font=font_small, fill=0)
-        draw.text((0, 18), line2, font=font_small, fill=0)
+        draw.text((0, 1), line1, font=font, fill=0)
+        draw.text((0, 18), line2, font=font, fill=0)
         show.ShowImage(show.getbuffer(img))
 
     def display(self):
