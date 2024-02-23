@@ -21,7 +21,7 @@ image1 = Image.new('1', (show.width, show.height), "WHITE")
 draw = ImageDraw.Draw(image1)
 
 DEFAULT_TEMP_THRESHOLD_FOR_FAN = 30
-DEFAULT_DISPLAY_DELAY_SECONDS = 3
+DEFAULT_DISPLAY_DELAY_SECONDS = 2
 
 
 class POE_HAT_B:
@@ -68,9 +68,11 @@ class POE_HAT_B:
             time.strftime('%H:%M:%S', time.localtime())
         )
 
-    def date_single_line_view(self):
-        self.display_one_line(
-            time.strftime('%m.%d', time.localtime())
+    def load_average_view(self):
+        load1, load5, load15 = os.getloadavg()
+        self.display_two_lines(
+            f"load average:",
+            f"1m: {load1:.2f} | 5m: {load5:.2f} | 15m: {load15:.2f}"
         )
 
     def temp_and_fan_view(self):
@@ -106,13 +108,12 @@ class POE_HAT_B:
         show.ShowImage(show.getbuffer(img))
 
     def display(self):
-
         for view in itertools.cycle([
-            self.address_and_host_view,
-            self.temp_and_fan_view,
-            self.date_time_view,
-            self.date_single_line_view,
             self.time_single_line_view,
+            self.address_and_host_view,
+            self.date_time_view,
+            self.temp_and_fan_view,
+            self.load_average_view,
         ]):
             view()
             time.sleep(self.display_delay)
