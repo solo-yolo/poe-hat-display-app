@@ -142,11 +142,11 @@ class POE_HAT_B:
 
     def display(self):
         for view in itertools.cycle([
-            # self.time_single_line_view,
-            # self.address_and_host_view,
-            # self.date_time_view,
-            # self.temp_and_fan_view,
-            # self.load_average_view,
+            self.time_single_line_view,
+            self.address_and_host_view,
+            self.date_time_view,
+            self.temp_and_fan_view,
+            self.load_average_view,
             self.memory_view,
             self.storage_view,
             self.uptime_view,
