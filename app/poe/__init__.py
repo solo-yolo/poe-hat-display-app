@@ -87,9 +87,13 @@ class POE_HAT_B:
             time.strftime('%H:%M:%S', time.localtime())
         )
 
-    def date_time_single_line_view(self):
+    def time_single_line_view(self):
         self.display_one_line(
-            time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+            time.strftime('%H:%M:%S', time.localtime())
+        )
+    def date_single_line_view(self):
+        self.display_one_line(
+            time.strftime('%H:%M:%S', time.localtime())
         )
 
     def temp_and_fan_view(self):
@@ -101,15 +105,14 @@ class POE_HAT_B:
             self.disable_fan()
 
         temp_formatted_line = f"cpu: {temp:.1f}°C"
-        # temp_formatted_line = f"cpu temperature: " + str(((int)(temp * 10)) / 10.0) + "°C"
         fan_status_line = "fan: enabled" if self.fan_enabled else "fan: disabled"
 
         self.display_two_lines(temp_formatted_line, fan_status_line)
 
     def address_and_host_view(self):
         self.display_two_lines(
-            f"ip:   {self.ip}",
-            f"host: {self.hostname}"
+            f"host: {self.hostname}",
+            f"ip: {self.ip}",
         )
 
     def display_one_line(self, text):
@@ -122,7 +125,7 @@ class POE_HAT_B:
         img = Image.new('1', (show.width, show.height), "WHITE")
         draw = ImageDraw.Draw(img)
         draw.text((0, 1), line1, font=font_small, fill=0)
-        draw.text((0, 15), line2, font=font_small, fill=0)
+        draw.text((0, 18), line2, font=font_small, fill=0)
         show.ShowImage(show.getbuffer(img))
 
     def display(self):
@@ -130,7 +133,8 @@ class POE_HAT_B:
             self.address_and_host_view,
             self.temp_and_fan_view,
             self.date_time_view,
-            self.date_time_single_line_view,
+            self.date_single_line_view,
+            self.time_single_line_view,
         ]
 
         for view in itertools.cycle(views):
