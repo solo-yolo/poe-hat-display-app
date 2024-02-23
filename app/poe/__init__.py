@@ -71,8 +71,8 @@ class POE_HAT_B:
     def load_average_view(self):
         load1, load5, load15 = os.getloadavg()
         self.display_two_lines(
-            f"load average:",
-            f"1m: {load1:.2f} | 5m: {load5:.2f} | 15m: {load15:.2f}"
+            f"load avg: 1m | 5m | 15m",
+            f"{load1:.2f} | {load5:.2f} | {load15:.2f}"
         )
 
     def temp_and_fan_view(self):
@@ -91,7 +91,7 @@ class POE_HAT_B:
     def address_and_host_view(self):
         self.display_two_lines(
             f"host: {self.hostname}",
-            f"ip: {self.ip}",
+            self.ip,
         )
 
     def display_one_line(self, text):
