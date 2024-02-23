@@ -111,6 +111,12 @@ class POE_HAT_B:
             self.ip,
         )
 
+    def ip_view(self):
+        self.display_one_line(self.hostname)
+
+    def host_view(self):
+        self.display_one_line(self.hostname)
+
     def memory_view(self):
         mem = psutil.virtual_memory()
         self.display_two_lines(
@@ -142,6 +148,8 @@ class POE_HAT_B:
 
     def display(self):
         for view in itertools.cycle([
+            self.ip_view,
+            self.host_view,
             self.time_single_line_view,
             self.address_and_host_view,
             self.date_time_view,
