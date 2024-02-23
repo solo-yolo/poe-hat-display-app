@@ -4,6 +4,7 @@ import socket
 import time
 import datetime
 
+import psutil
 import smbus
 from PIL import Image, ImageDraw, ImageFont
 
@@ -110,6 +111,23 @@ class POE_HAT_B:
             self.ip,
         )
 
+    def memory_view(self):
+        mem = psutil.virtual_memory()
+        swp = psutil.swap_memory()
+        self.display_two_lines(
+            f"mem: {mem.percent}%, swp: {swp.percent}%",
+            f"used/total: {mem.used / (2**30):.2f}/{mem.total / (2**30):.2f}GB",
+            font=font_medium
+        )
+
+    def storage_view(self):
+        disk = psutil.disk_usage('/')
+        self.display_two_lines(
+            f"storage: {disk.percent}%",
+            f"used/total: {disk.used / (2**30):.2f}/{disk.total / (2**30):.2f}GB",
+            font=font_medium
+        )
+
     def display_one_line(self, text, font=font_large):
         img = Image.new('1', (show.width, show.height), "WHITE")
         draw = ImageDraw.Draw(img)
@@ -130,6 +148,8 @@ class POE_HAT_B:
             self.date_time_view,
             self.temp_and_fan_view,
             self.load_average_view,
+            self.memory_view,
+            self.storage_view,
             self.uptime_view,
         ]):
             view()
