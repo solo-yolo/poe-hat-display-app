@@ -115,16 +115,16 @@ class POE_HAT_B:
         mem = psutil.virtual_memory()
         self.display_two_lines(
             f"memory: {mem.percent}%",
-            f"{mem.used / (2**30):.2f}/{mem.total / (2**30):.2f}GB",
-            font=font_small
+            f"{mem.used / (2**30):.2f} of {mem.total / (2**30):.2f}GB",
+            font=font_medium
         )
 
     def storage_view(self):
         disk = psutil.disk_usage('/')
         self.display_two_lines(
             f"storage: {disk.percent}%",
-            f"{disk.used / (2**30):.2f}/{disk.total / (2**30):.2f}GB",
-            font=font_small
+            f"{disk.used / (2**30):.2f} of {disk.total / (2**30):.2f}GB",
+            font=font_medium
         )
 
     def display_one_line(self, text, font=font_large):
