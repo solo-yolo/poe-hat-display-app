@@ -1,7 +1,7 @@
 based on https://www.waveshare.com/wiki/PoE_HAT_(B)
 
 ```
-git clone https://github.com/solo-yolo/poe-hat-display-app.git /var/lib/poe-hat-display-app
+sudo git clone https://github.com/solo-yolo/poe-hat-display-app.git /var/lib/poe-hat-display-app
 cd /var/lib/poe-hat-display-app
 
 sudo apt-get install python3-pip
