@@ -13,8 +13,8 @@ dir_path = os.path.dirname(os.path.abspath(__file__))
 
 font_path = dir_path + '/font.ttf'
 
-font_small = ImageFont.truetype(font_path, 15)
-font_large = ImageFont.truetype(font_path, 30)
+font_small = ImageFont.truetype(font_path, 13)
+font_large = ImageFont.truetype(font_path, 26)
 
 image1 = Image.new('1', (show.width, show.height), "WHITE")
 draw = ImageDraw.Draw(image1)
@@ -83,8 +83,8 @@ class POE_HAT_B:
 
     def date_time_view(self):
         self.display_two_lines(
-            'date: ' + time.strftime('%Y-%m-%d', time.localtime()),
-            'time: ' + time.strftime('%H:%M:%S', time.localtime())
+            time.strftime('%Y-%m-%d', time.localtime()),
+            time.strftime('%H:%M:%S', time.localtime())
         )
 
     def date_time_single_line_view(self):
@@ -100,9 +100,9 @@ class POE_HAT_B:
         elif temp < self.temp_threshold_for_fan - 2:
             self.disable_fan()
 
-        temp_formatted_line = f"cpu temperature: {temp:.1f}°C"
+        temp_formatted_line = f"cpu: {temp:.1f}°C"
         # temp_formatted_line = f"cpu temperature: " + str(((int)(temp * 10)) / 10.0) + "°C"
-        fan_status_line = "fan:  on" if self.fan_enabled else "fan: off"
+        fan_status_line = "fan: enabled" if self.fan_enabled else "fan: disabled"
 
         self.display_two_lines(temp_formatted_line, fan_status_line)
 

@@ -13,4 +13,4 @@ try:
 
 except KeyboardInterrupt:
     print("ctrl + c:")
-    POE.FAN_OFF()
+    POE.disable_fan()
